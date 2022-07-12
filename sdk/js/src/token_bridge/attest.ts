@@ -1,4 +1,11 @@
-import { Connection, Keypair, PublicKey, Transaction } from "@solana/web3.js";
+import {
+  Commitment,
+  Connection,
+  Keypair,
+  PublicKey,
+  PublicKeyInitData,
+  Transaction,
+} from "@solana/web3.js";
 import { MsgExecuteContract } from "@terra-money/terra.js";
 import { MsgExecuteContract as MsgExecuteContractInjective } from "@injectivelabs/sdk-ts";
 import {
@@ -12,13 +19,13 @@ import {
   SuggestedParams,
 } from "algosdk";
 import { Account as nearAccount } from "near-api-js";
-const BN = require("bn.js");
+import BN from "bn.js";
 import { ethers, PayableOverrides } from "ethers";
 import { isNativeDenom } from "..";
 import { getMessageFee, optin, TransactionSignerPair } from "../algorand";
 import { Bridge__factory } from "../ethers-contracts";
-import { getBridgeFeeIx, ixFromRust } from "../solana";
-import { importTokenWasm } from "../solana/wasm";
+import { createBridgeFeeTransferInstruction } from "../solana";
+import { createAttestTokenInstruction } from "../solana/tokenBridge";
 import { textToHexString, textToUint8Array, uint8ArrayToHex } from "../utils";
 import { safeBigIntToNumber } from "../utils/bigint";
 import { createNonce } from "../utils/createNonce";
@@ -99,31 +106,29 @@ export async function attestFromInjective(
 
 export async function attestFromSolana(
   connection: Connection,
-  bridgeAddress: string,
-  tokenBridgeAddress: string,
-  payerAddress: string,
-  mintAddress: string
+  bridgeAddress: PublicKeyInitData,
+  tokenBridgeAddress: PublicKeyInitData,
+  payerAddress: PublicKeyInitData,
+  mintAddress: PublicKeyInitData,
+  commitment?: Commitment
 ): Promise<Transaction> {
   const nonce = createNonce().readUInt32LE(0);
-  const transferIx = await getBridgeFeeIx(
+  const transferIx = await createBridgeFeeTransferInstruction(
     connection,
     bridgeAddress,
     payerAddress
   );
-  const { attest_ix } = await importTokenWasm();
   const messageKey = Keypair.generate();
-  const ix = ixFromRust(
-    attest_ix(
-      tokenBridgeAddress,
-      bridgeAddress,
-      payerAddress,
-      messageKey.publicKey.toString(),
-      mintAddress,
-      nonce
-    )
+  const attestIx = createAttestTokenInstruction(
+    tokenBridgeAddress,
+    bridgeAddress,
+    payerAddress,
+    mintAddress,
+    messageKey.publicKey,
+    nonce
   );
-  const transaction = new Transaction().add(transferIx, ix);
-  const { blockhash } = await connection.getRecentBlockhash();
+  const transaction = new Transaction().add(transferIx, attestIx);
+  const { blockhash } = await connection.getLatestBlockhash(commitment);
   transaction.recentBlockhash = blockhash;
   transaction.feePayer = new PublicKey(payerAddress);
   transaction.partialSign(messageKey);
