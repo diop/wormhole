@@ -27,13 +27,13 @@ import {
   parseSequenceFromLogTerra,
   redeemOnEth,
   redeemOnTerra,
-  TokenImplementation__factory,
   transferFromEth,
   transferFromTerra,
   tryNativeToHexString,
   tryNativeToUint8Array,
   updateWrappedOnEth,
 } from "../..";
+import { TokenImplementation__factory } from "../../ethers-contracts";
 import getSignedVAAWithRetry from "../../rpc/getSignedVAAWithRetry";
 import {
   ETH_NODE_URL,

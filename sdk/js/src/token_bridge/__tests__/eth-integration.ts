@@ -28,10 +28,10 @@ import {
   parseSequenceFromLogEth,
   postVaaSolana,
   redeemOnSolana,
-  TokenImplementation__factory,
   transferFromEth,
   tryNativeToUint8Array,
 } from "../..";
+import { TokenImplementation__factory } from "../../ethers-contracts";
 import getSignedVAAWithRetry from "../../rpc/getSignedVAAWithRetry";
 import { postVaaWithRetry } from "../../solana/sendAndConfirmPostVaa";
 import {

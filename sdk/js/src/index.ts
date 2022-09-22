@@ -14,3 +14,5 @@ export * as bridge from "./bridge";
 export * as token_bridge from "./token_bridge";
 export * as nft_bridge from "./nft_bridge";
 export * as algorand from "./algorand";
+
+export { postVaaSolana, postVaaSolanaWithRetry } from "./solana";

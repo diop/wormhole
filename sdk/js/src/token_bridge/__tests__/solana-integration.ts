@@ -25,11 +25,11 @@ import {
   hexToUint8Array,
   parseSequenceFromLogSolana,
   redeemOnEth,
-  TokenImplementation__factory,
   transferFromSolana,
   tryNativeToHexString,
   tryNativeToUint8Array,
 } from "../..";
+import { TokenImplementation__factory } from "../../ethers-contracts";
 import getSignedVAAWithRetry from "../../rpc/getSignedVAAWithRetry";
 import {
   ETH_NODE_URL,

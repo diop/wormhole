@@ -32,13 +32,13 @@ import {
   redeemOnAlgorand,
   redeemOnEth,
   textToUint8Array,
-  TokenImplementation__factory,
   transferFromAlgorand,
   transferFromEth,
   uint8ArrayToHex,
   updateWrappedOnEth,
   WormholeWrappedInfo,
 } from "../..";
+import { TokenImplementation__factory } from "../../ethers-contracts";
 import { _parseVAAAlgorand } from "../../algorand";
 import {
   createAsset,
