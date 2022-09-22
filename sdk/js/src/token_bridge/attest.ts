@@ -21,7 +21,7 @@ import {
 import { Account as nearAccount } from "near-api-js";
 import BN from "bn.js";
 import { ethers, PayableOverrides } from "ethers";
-import { isNativeDenom } from "..";
+import { isNativeDenom } from "../terra";
 import { getMessageFee, optin, TransactionSignerPair } from "../algorand";
 import { Bridge__factory } from "../ethers-contracts";
 import { createBridgeFeeTransferInstruction } from "../solana";

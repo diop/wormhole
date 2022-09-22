@@ -1,11 +1,8 @@
-export * from "./cosmos";
-export * from "./ethers-contracts";
-export * from "./solana";
-export * from "./terra";
 export * from "./rpc";
 export * from "./utils";
 export * from "./bridge";
 export * from "./token_bridge";
+export * from "./vaa";
 
 export * as cosmos from "./cosmos";
 export * as ethers_contracts from "./ethers-contracts";

@@ -7,7 +7,8 @@ import {
 import { LCDClient } from "@terra-money/terra.js";
 import { BigNumber, ethers } from "ethers";
 import { arrayify, zeroPad } from "ethers/lib/utils";
-import { canonicalAddress, WormholeWrappedInfo } from "..";
+import { WormholeWrappedInfo } from "..";
+import { canonicalAddress } from "../cosmos";
 import { TokenImplementation__factory } from "../ethers-contracts";
 import { getWrappedMeta } from "../solana/nftBridge";
 import {

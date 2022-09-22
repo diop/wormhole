@@ -34,7 +34,7 @@ import {
   Account as nearAccount,
   providers as nearProviders,
 } from "near-api-js";
-import { isNativeDenom } from "..";
+import { isNativeDenom } from "../terra";
 import {
   assetOptinCheck,
   getMessageFee,
